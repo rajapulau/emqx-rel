@@ -37,7 +37,11 @@ MakeDep =
            end,
         RepoName = string:join(string:tokens(atom_to_list(AppName), "_"), "-"),
         URL = "https://github.com/emqx/" ++ RepoName,
-        {AppName, {git, URL, GitRef}}
+        URLX = "https://github.com/rajapulau/emqx",
+        case RepoName of
+            "emqx" -> {AppName, {git, URLX, GitRef}};
+            _ -> {AppName, {git, URL, GitRef}}
+        end
     end,
 
 MakeDeps = fun(Deps, DefaultDepRef, TestDeps) -> [MakeDep(App, DefaultDepRef) || App <- Deps] ++ TestDeps end,
